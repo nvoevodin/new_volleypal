@@ -1,18 +1,32 @@
 import React from "react";
-import {View} from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
+import { View } from "react-native";
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Title,
+  Text,
+} from "native-base";
 import { ImageBackground } from "react-native";
 
-
-
-const PlayersHeader = (props) =>  {
- 
-    return (
-      <View style = {{flex:2}}>
-     <ImageBackground 
-     source={{uri: `${global.x}`+ '/' + props.playgroundImage}} 
-     style={{width: '100%',height: '100%'}}>
-              <Header style = {{backgroundColor: 'transparent',borderBottomWidth: 0, elevation:0}}>
+const PlayersHeader = (props) => {
+  return (
+    <View style={{ flex: 2 }}>
+      <ImageBackground
+        source={{ uri: `${global.x}` + "/" + props.playgroundImage }}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <Header
+          style={{
+            backgroundColor: "transparent",
+            borderBottomWidth: 0,
+            elevation: 0,
+          }}
+        >
           {/* <Left>
             <Button transparent>
               <Icon name='arrow-back' />
@@ -27,13 +41,9 @@ const PlayersHeader = (props) =>  {
             </Button>
           </Right> */}
         </Header>
-    </ImageBackground>
+      </ImageBackground>
+    </View>
+  );
+};
 
-      </View>
-
-      
-    );
-  
-}
-
-export default PlayersHeader 
+export default PlayersHeader;

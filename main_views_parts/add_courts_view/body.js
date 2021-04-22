@@ -7,102 +7,96 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import {
-  Button,
-  Text,
-  Form,
-  Textarea,
-} from "native-base";
+import { Button, Text, Form, Textarea } from "native-base";
 
-import CountryPicker from './country_picker'
-import SurfacePicker from './surface_picker'
-import TypePicker from './type_picker'
-import ImageSelector from './imagePicker'
-import {uploadImage} from './functions/imageSender'
+import CountryPicker from "./country_picker";
+import SurfacePicker from "./surface_picker";
+import TypePicker from "./type_picker";
+import ImageSelector from "./imagePicker";
+import { uploadImage } from "./functions/imageSender";
 import { useNavigation } from "@react-navigation/native";
-import {getPlaygrounds} from '../court_list_view/functions/getCourtsFunc'
-import {getCurrentLoc} from './functions/distanceDecider'
+import { getPlaygrounds } from "../court_list_view/functions/getCourtsFunc";
+import { getCurrentLoc } from "./functions/distanceDecider";
 
 const AddCourtBody = () => {
   const [playgrounds, setPlaygrounds] = useState([]);
-  const [name, setName] = useState('');
-  const [type, setType] = useState('Public');
-  const [surface, setSurface] = useState('Beach');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('United States');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [type, setType] = useState("Public");
+  const [surface, setSurface] = useState("Beach");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("United States");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [submittedAnimation, setSubmittedAnimation] = useState(false);
-  
-
- 
 
   const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
       }
 
-      setPlaygrounds(await getPlaygrounds())
-      
-
+      setPlaygrounds(await getPlaygrounds());
     })();
   }, []);
 
-
-  const submitNewCourt = async () =>{
-    if (!name || !description || type === 'Cancel' || !city || !address || surface === 'Cancel'||!image||country === 'Cancel'){
-      alert('Must fill out all required fields!')
+  const submitNewCourt = async () => {
+    if (
+      !name ||
+      !description ||
+      type === "Cancel" ||
+      !city ||
+      !address ||
+      surface === "Cancel" ||
+      !image ||
+      country === "Cancel"
+    ) {
+      alert("Must fill out all required fields!");
     } else {
-      setSubmittedAnimation(true)
-      await getCurrentLoc(playgrounds,name,city,country,address,image,type,surface,description,phone)
-      setSubmittedAnimation(false)
-      navigation.navigate("Courts")
+      setSubmittedAnimation(true);
+      await getCurrentLoc(
+        playgrounds,
+        name,
+        city.toLowerCase(),
+        country,
+        address,
+        image,
+        type,
+        surface,
+        description,
+        phone
+      );
+      setSubmittedAnimation(false);
+      navigation.navigate("Courts");
     }
- 
+  };
 
-  }
+  const submitImage = async () => {
+    await uploadImage(image, name, city, country, address);
+  };
 
-  const submitImage = async () =>{
-    console.log('submitting')
-    await uploadImage(image,name,city,country,address)
-    
+  const ReceiveCountryFromPicker = (x) => {
+    setCountry(x);
+  };
 
-  }
+  const ReceiveTypeFromPicker = (x) => {
+    setType(x);
+  };
 
-  const ReceiveCountryFromPicker = (x) =>{
-   
-    setCountry(x)
-  }
+  const ReceiveSurfaceFromPicker = (x) => {
+    setSurface(x);
+  };
 
-  const ReceiveTypeFromPicker = (x) =>{
-   
-    setType(x)
-  }
-
-  const ReceiveSurfaceFromPicker = (x) =>{
-   
-    setSurface(x)
-  }
-
-  const selectImage = (x) =>{
-   
-    setImage(x)   
-}
-
-
-
-
-  
-
+  const selectImage = (x) => {
+    setImage(x);
+  };
 
   return (
-    <ScrollView >
+    <ScrollView>
       <Text
         style={{
           textAlign: "center",
@@ -116,7 +110,7 @@ const AddCourtBody = () => {
         Please be responsible when adding your playground! Add all requested
         information! You must be at the playground to add it to the list.
       </Text>
-      <Form style = {styles.container}>
+      <Form style={styles.container}>
         <Text
           style={{
             textAlign: "center",
@@ -129,14 +123,14 @@ const AddCourtBody = () => {
         </Text>
 
         <Textarea
-        style = {{backgroundColor:'white', borderWidth:1}}
+          style={{ backgroundColor: "white", borderWidth: 1 }}
           underline
           blurOnSubmit={true}
           placeholder="Name the playground. Use the most recognized name. Ex.: Central Park Beach Volleyball Playground"
-          onChangeText={(Name) => setName( Name )}
+          onChangeText={(Name) => setName(Name)}
         />
 
-<Text
+        <Text
           style={{
             textAlign: "center",
             fontSize: 20,
@@ -147,10 +141,9 @@ const AddCourtBody = () => {
           Type *
         </Text>
 
-        <TypePicker SendTypeFromPicker = {ReceiveTypeFromPicker}/>
+        <TypePicker SendTypeFromPicker={ReceiveTypeFromPicker} />
 
-
-<Text
+        <Text
           style={{
             textAlign: "center",
             fontSize: 20,
@@ -160,7 +153,7 @@ const AddCourtBody = () => {
         >
           Surface *
         </Text>
-<SurfacePicker SendSurfaceFromPicker = {ReceiveSurfaceFromPicker}/>
+        <SurfacePicker SendSurfaceFromPicker={ReceiveSurfaceFromPicker} />
 
         <Text
           style={{
@@ -173,8 +166,7 @@ const AddCourtBody = () => {
           Country *
         </Text>
 
-<CountryPicker SendCountryFromPicker = {ReceiveCountryFromPicker}/>
-
+        <CountryPicker SendCountryFromPicker={ReceiveCountryFromPicker} />
 
         <Text
           style={{
@@ -188,11 +180,11 @@ const AddCourtBody = () => {
         </Text>
 
         <Textarea
-        style = {{backgroundColor:'white', borderWidth:1}}
+          style={{ backgroundColor: "white", borderWidth: 1 }}
           underline
           blurOnSubmit={true}
           placeholder="Enter city here. Use a city, not a neighborhood. Ex.: New York."
-          onChangeText={(City) => setCity( City )}
+          onChangeText={(City) => setCity(City)}
         />
 
         <Text
@@ -207,14 +199,14 @@ const AddCourtBody = () => {
         </Text>
 
         <Textarea
-        style = {{backgroundColor:'white', borderWidth:1}}
+          style={{ backgroundColor: "white", borderWidth: 1 }}
           underline
           blurOnSubmit={true}
           placeholder="Use the closest known address to the playground. Ex.: Central Park West, New York, NY 10019"
-           onChangeText={(Address) => setAddress( Address )}
+          onChangeText={(Address) => setAddress(Address)}
         />
 
-<Text
+        <Text
           style={{
             textAlign: "center",
             fontSize: 20,
@@ -226,14 +218,14 @@ const AddCourtBody = () => {
         </Text>
 
         <Textarea
-        style = {{backgroundColor:'white', borderWidth:1}}
+          style={{ backgroundColor: "white", borderWidth: 1 }}
           underline
           blurOnSubmit={true}
           placeholder="Format example: +1-000-000-0000"
-           onChangeText={(phone) => setPhone( phone )}
+          onChangeText={(phone) => setPhone(phone)}
         />
 
-<Text
+        <Text
           style={{
             textAlign: "center",
             fontSize: 20,
@@ -245,15 +237,15 @@ const AddCourtBody = () => {
         </Text>
 
         <Textarea
-        style = {{backgroundColor:'white', borderWidth:1}}
+          style={{ backgroundColor: "white", borderWidth: 1 }}
           underline
           blurOnSubmit={true}
           rowSpan={6}
           placeholder="Write a few sentences here about the courts. Describe things like types of play, levels, number of people and times. Are there nets all the time, and is it beginner friendly? Please, be as descriptive as possible! If you have nothing to say about the courts, let someone else add them."
-           onChangeText={(Description) => setDescription( Description )}
+          onChangeText={(Description) => setDescription(Description)}
         />
 
-<Text
+        <Text
           style={{
             textAlign: "center",
             fontSize: 20,
@@ -264,7 +256,7 @@ const AddCourtBody = () => {
           Image *
         </Text>
 
-        <ImageSelector selectImage = {selectImage}/>
+        <ImageSelector selectImage={selectImage} />
 
         {/* <ImageSelector selectImage = {this.selectImage}/> */}
       </Form>
@@ -311,17 +303,16 @@ const AddCourtBody = () => {
 
                         <Text style = {{color:'white'}}>upload</Text>
                     </Button> */}
-                              {submittedAnimation && (
-            <View style={styles.loading}>
-              <ActivityIndicator
-              pointerEvents = "none"
-                animating={submittedAnimation}
-                
-                size="large"
-                color="white"
-              />
-            </View>
-          )}
+      {submittedAnimation && (
+        <View style={styles.loading}>
+          <ActivityIndicator
+            pointerEvents="none"
+            animating={submittedAnimation}
+            size="large"
+            color="white"
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -341,7 +332,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   container: {
-    
     justifyContent: "center",
     padding: 15,
   },

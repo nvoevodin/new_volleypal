@@ -1,65 +1,63 @@
 import React from "react";
-import {View,Platform, StyleSheet} from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import * as firebase from 'firebase';
+import { View, Platform, StyleSheet } from "react-native";
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Title,
+  Text,
+} from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import * as firebase from "firebase";
 
-
-
-const LostAndFoundHeader = (props) =>  {
+const LostAndFoundHeader = (props) => {
   const navigation = useNavigation();
-  
- 
 
-    return (
-      <View style = {{height:Platform.OS === 'android'?'8%':null}}>
+  return (
+    <View style={{ height: Platform.OS === "android" ? "8%" : null }}>
+      <Header style={styles.header}>
+        <Left></Left>
+        <Body>
+          <Title style={{ color: "black" }}>Lost and Found</Title>
+        </Body>
+      </Header>
+    </View>
+  );
+};
 
-<Header style = {styles.header}>
-<Left>
+const mapStateToProps = (state) => {
+  const { reducer } = state;
+  return { reducer };
+};
 
- 
-  </Left>
-  <Body>
-    <Title style = {{color:'black'}}>Lost and Found</Title>
-  </Body>
+const mapDispachToProps = (dispatch) => {
+  return {
+    //signedIn:(x)=>dispatch({type: "STORE_USER_STATUS", value: x}),
+    // storeUserId: (id,fname,sname,email) => dispatch({ type: "STORE_USER_ID", value: id, value1:fname, value2:sname, value3:email})
+  };
+};
 
-  
-</Header>
-</View>
-    )}
+export default connect(mapStateToProps, mapDispachToProps)(LostAndFoundHeader);
 
-
-    const mapStateToProps = (state) => {
-    
-      const { reducer } = state
-      return { reducer }
-    };
-    
-    const mapDispachToProps = dispatch => {
-      return {
-          //signedIn:(x)=>dispatch({type: "STORE_USER_STATUS", value: x}),
-       // storeUserId: (id,fname,sname,email) => dispatch({ type: "STORE_USER_ID", value: id, value1:fname, value2:sname, value3:email})
-    
-      };
-    };
-    
-    export default connect(mapStateToProps, mapDispachToProps)(LostAndFoundHeader);
-
-
-    const styles = StyleSheet.create({
-      header: {
-        backgroundColor:'#e3e8e6',
-        ...Platform.select({
-          ios: {
-            borderBottomWidth: 0
-          },
-          android: {
-            top:'5%', borderBottomWidth: 0,elevation: 0
-          }
-    
-        })
-      }
-    });
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "#e3e8e6",
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: 0,
+      },
+      android: {
+        top: "5%",
+        borderBottomWidth: 0,
+        elevation: 0,
+      },
+    }),
+  },
+});
