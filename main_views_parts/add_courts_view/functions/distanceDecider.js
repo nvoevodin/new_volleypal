@@ -65,6 +65,7 @@ export const getCurrentLoc = async (
         }
       });
     } else {
+      //console.log(description)
       // Check if any file is selected or not
       if (image != null) {
         // If file selected then create FormData
@@ -99,7 +100,9 @@ export const getCurrentLoc = async (
           body: data,
         };
         fetch(`${global.x}/addImage`, config)
-          .then((checkStatusAndGetJSONResponse) => {})
+          .then((checkStatusAndGetJSONResponse) => {
+            //console.log(checkStatusAndGetJSONResponse)
+          })
           .catch((err) => {
             console.log(err);
           });

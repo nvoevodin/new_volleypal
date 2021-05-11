@@ -17,7 +17,10 @@ const WelcomeScreen = (props) => {
         Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       });
 
-      setUser();
+      setTimeout(() => {
+        setUser();
+      }, 4000)
+      
     })();
   }, []);
 
@@ -53,6 +56,7 @@ const WelcomeScreen = (props) => {
   };
 
   return (
+    <>
     <Animatable.View animation="bounceInDown" style={styles.container1}>
       <Image
         source={require("../assets/logo.png")}
@@ -61,6 +65,12 @@ const WelcomeScreen = (props) => {
 
       <Text style={{ fontSize: 43, fontWeight: "bold" }}>VolleyPal</Text>
     </Animatable.View>
+        <Animatable.View animation="bounceInUp" style={styles.container1}>
+    
+        <Text style={{ fontSize: 15, fontWeight: "bold", marginTop: '55%' }}>brought to you by</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", color:'green', marginTop:'5%' }}>Nikita Voevodin</Text>
+      </Animatable.View>
+      </>
   );
 };
 

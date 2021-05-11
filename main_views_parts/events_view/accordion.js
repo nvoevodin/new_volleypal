@@ -13,7 +13,7 @@ const HomeAccordion = (props) => {
 
   return (
     <View>
-      <Accordion dataArray={props.playground} />
+      <Accordion dataArray={props.playground} expanded = {1} />
     </View>
   );
 };

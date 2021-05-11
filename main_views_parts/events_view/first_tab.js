@@ -40,7 +40,7 @@ const MainEvent = (props) => {
 
   const JoinLeaveInfo = () => {
     Alert.alert(
-      `Group basics.`,
+      `Event basics.`,
       `Join or leave the event here.`,
       [{ text: "Got it", onPress: () => {} }],
       { cancelable: false }
@@ -105,7 +105,7 @@ const MainEvent = (props) => {
               <Button
                 style={{ backgroundColor: "blue" }}
                 onPress={async () => {
-                  onShare();
+                  onShare(props.reducer.eventInfo["type"]);
                 }}
               >
                 <Text>Invite</Text>

@@ -28,6 +28,18 @@ const GroupsHeader = (props) => {
           zIndex: 2,
         }}
       >
+                <Left>
+          <Button
+            rounded
+            style={{ backgroundColor: "rgba(212, 190, 190, 0.85)" }}
+            onPress={() => alert("This section is in beta stage, which means that the functionality is experimental and is still in developement.")}
+          >
+            <Text style={{ color: "red", fontWeight: "bold" }}>
+              Beta
+            </Text>
+            {/* <Entypo name="plus" size={28} color="black" /> */}
+          </Button>
+        </Left>
         <Right>
           <Button
             rounded

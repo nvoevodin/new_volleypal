@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CourtList from "../main_views_parts/court_list_view/CourtLIst";
 import CourtListHeader from "../main_views_parts/court_list_view/header";
@@ -11,6 +11,7 @@ const CourtListView = (props) => {
 
   useEffect(() => {
     (async () => {
+      welcomeAlert()
       AsyncStorage.getItem("defaultCourt", async (error, result) => {
         var res = JSON.parse(result);
 
@@ -22,7 +23,11 @@ const CourtListView = (props) => {
             res[3],
             res[4],
             res[5],
-            res[6]
+            res[6],
+            res[7],
+            res[8],
+            res[9],
+            res[10]
           );
 
           navigation.navigate("Court");
@@ -32,6 +37,46 @@ const CourtListView = (props) => {
       });
     })();
   }, []);
+
+
+  const welcomeAlert = async () =>{
+    try{
+      var value = await AsyncStorage.getItem('welcomeAlert')
+    } catch(e){
+console.log('error')
+    }
+    
+    var val = (value === 'true')
+    console.log(val)
+if (val === false){
+
+  Alert.alert(
+    `Welcome to VolleyPal.`,
+    `VolleyPal is an all around service for volleyball players. Check out www.VolleyPal.site page for the detailed app guide. \n
+    DISCLOSURE: \n 
+    * This app requests location data to enable check in and out at appropriate courts. 
+    * We do not collect, store, or share your location data for any other purposes.
+    * The app will also request access to your photo library if you decide to add a court.`,
+    [
+
+      { text: "Got it", onPress: () => {
+  
+        try {
+          AsyncStorage.setItem('welcomeAlert', "true")
+        } catch (e) {
+          console.log('something wrong (storage)')
+        }
+  
+        
+      } }
+    ],
+    { cancelable: false }
+  );
+
+}
+
+  }
+
 
   return (
     <React.Fragment>
@@ -49,7 +94,7 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
-    storePlayground: (name, id, lat, lon, img, description, phone) =>
+    storePlayground: (name, id, lat, lon, img, description, phone, type,surface,distance,city) =>
       dispatch({
         type: "STORE_PLAYGROUND",
         value: name,
@@ -59,7 +104,11 @@ const mapDispachToProps = (dispatch) => {
         value4: img,
         value5: description,
         value6: phone,
-        value7: id,
+        value7: type,
+        value8: surface,
+        value9: distance,
+        value10: city,
+        value11: id,
       }),
   };
 };

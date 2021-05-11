@@ -20,7 +20,7 @@ import ourReducer from "./store/reducer";
 const store = createStore(ourReducer);
 
 global.x = "https://volleypal.data39.site";
-//global.x = 'http://192.168.2.5:3007'
+//global.x = 'http://192.168.2.6:3007'
 const firebaseConfig = {
   apiKey: "AIzaSyC-DLOVYQwdqibU8ZrBL7TnKx-H7HxmoPQ",
   authDomain: "geohutsport.firebaseapp.com",

@@ -11,7 +11,7 @@ export default function ImageSelector(props) {
       if (Platform.OS !== "web") {
         const {
           status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -23,8 +23,8 @@ export default function ImageSelector(props) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [3, 3],
-      quality: 0,
+      aspect: [4, 3],
+      quality: 0.15,
     });
 
     if (!result.cancelled) {

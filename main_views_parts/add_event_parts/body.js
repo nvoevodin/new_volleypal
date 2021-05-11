@@ -88,7 +88,7 @@ const AddEventBody = (props) => {
       </Text>
 
       <Textarea
-        style={{ marginLeft: "3%", marginRight: "3%" }}
+        style={{ marginLeft: "3%", marginRight: "3%",backgroundColor: "white", borderWidth: 1 }}
         underline
         blurOnSubmit={true}
         rowSpan={1}
@@ -136,10 +136,10 @@ const AddEventBody = (props) => {
       </Text>
 
       <Textarea
-        style={{ marginLeft: "3%", marginRight: "3%" }}
+        style={{ marginLeft: "3%", marginRight: "3%",backgroundColor: "white", borderWidth: 1 }}
         underline
         blurOnSubmit={true}
-        rowSpan={6}
+        rowSpan={5}
         placeholder="Write a few words about your event."
         onChangeText={(x) => setDescription(x)}
       />

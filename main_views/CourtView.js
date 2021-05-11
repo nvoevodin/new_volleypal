@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import HomeHeader from "../main_views_parts/court_view/header";
 import HomeAccordion from "../main_views_parts/court_view/accordion";
 import HomeTabs from "../main_views_parts/court_view/slidingMenus";
+
 const CourtView = (props) => {
   return (
     <React.Fragment>

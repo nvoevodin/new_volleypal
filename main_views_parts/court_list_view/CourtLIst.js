@@ -10,7 +10,7 @@ import {
 import {
   Container,
   Header,
-  Content,
+
   List,
   ListItem,
   Icon,
@@ -24,7 +24,7 @@ import {
   Tabs,
   TabHeading,
 } from "native-base";
-
+import { connect } from "react-redux";
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 
@@ -51,17 +51,17 @@ const CourtList = (props) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
-      await setSubmittedAnimation(true);
+      setSubmittedAnimation(true);
       setPlaygrounds(await getPlaygrounds());
 
       setPotential_sites(await getPotentialPlaygrounds());
       setSubmittedAnimation(false);
     })();
-  }, []);
+  }, [props.reducer.courtListTrigger]);
 
   const filterCourts = (x) => {
     setFilters(x);
@@ -147,7 +147,20 @@ const CourtList = (props) => {
   );
 };
 
-export default CourtList;
+const mapStateToProps = (state) => {
+  const { reducer } = state;
+  return { reducer };
+};
+
+const mapDispachToProps = (dispatch) => {
+  return {
+   
+  };
+};
+
+export default connect(mapStateToProps, mapDispachToProps)(CourtList);
+
+
 
 const styles = StyleSheet.create({
   loading: {

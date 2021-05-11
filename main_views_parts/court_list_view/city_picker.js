@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Content, Form, Picker } from "native-base";
+import { Form, Picker } from "native-base";
 import { toTitleCase } from "../../helper_functions/functions";
 
 import { View } from "react-native";

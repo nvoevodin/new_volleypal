@@ -5,10 +5,10 @@ const onShare = async (type) => {
   try {
     const result = await Share.share(Platform.OS === "android"?{
       
-      message: `${"I am creating a "+type+" on VolleyPal. Download the app to join. https://volleypal.site/"}`
+      message: `${"I am on VolleyPal. Check it out. https://volleypal.site/"}`
       
     }:{
-      message: `${"I am creating a "+type+" on VolleyPal. Download the app to join."}`,
+      message: `${"I am on VolleyPal. Check it out."}`,
       url: "https://volleypal.site/"
     });
     if (result.action === Share.sharedAction) {

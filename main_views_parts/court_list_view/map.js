@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import MapView, { Marker } from "react-native-maps";
+import React, { useState, useEffect } from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
   Image,
   TouchableOpacity,
@@ -13,22 +13,58 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 
+
+
+
+
 const CourtMap = (props) => {
-  const [defaultCourt, setDefaultCourt] = useState([
+  const [defaultCourt, setDefaultCourt] = useState(
+    [
     "Brighton Beach 1",
     "V0000001",
     "New York",
     40.5745,
     -73.9671,
-    "uploads/user-1610476434181.jpeg",
-    "Test",
-    0,
+    "uploads/user-1619804971586.jpeg",
+    "Legendary Brighton Beach volleyball courts are located at Brighton Beach 1, just to the left of the Ocean Parkway entrance to the boarwalk. There are currently 3 nets that are usually split by levels of mastery of the game. On any high season day you will see games starting around 2-3pm on a weekday, and 4-5pm once it gets hotter in the summer months. On weekends, games usually start around 9am all year long when weather is acceptable. Upon availability, the games would usually start as ‘doubles’, but would gradually merge into ‘fours’ as occupancy of our courts increases later in the evening. Brighton Beach 1 is a settled community and it is pretty hard to get in if you are new, however, if you are a good player already, it should be easy to get games. Overall, it is a great place to chill and play volleyball as lines are short and games are fun.",
+    '-',
     "Public",
     "Beach",
     "",
     5,
-  ]);
+  ]
+  );
   const navigation = useNavigation();
+
+  useEffect(() => {
+    (async () => {
+
+
+      if(props.reducer.playgroundDefault && props.reducer.playgroundId === props.reducer.playgroundDefault){
+        setDefaultCourt([
+          props.reducer.playgroundName,
+                      props.reducer.playgroundId,
+                      props.reducer.playgroundCity,
+                      props.reducer.playgroundLat,
+                      props.reducer.playgroundLon,
+                      props.reducer.playgroundImage,
+                      props.reducer.playgroundDescription,
+                      props.reducer.playgroundDistance,
+                      props.reducer.playgroundType,
+                      props.reducer.playgroundSurface,
+                      props.reducer.playgroundPhone,
+                      5
+                      
+          
+        ])
+      }
+
+
+
+    })();
+  }, [props.reducer.playgroundDefault]);
+
+//console.log(defaultCourt)
 
   const storePlaygroundFunction = () => {
     if (defaultCourt[11] > 3) {
@@ -86,11 +122,12 @@ const CourtMap = (props) => {
       transparent={false}
       visible={props.modalVisible}
       onRequestClose={() => {
-        alert("Modal has been closed.");
+        props.showModal();
       }}
     >
       <View style={styles.container}>
         <MapView
+        provider={PROVIDER_GOOGLE}
           style={styles.map}
           loadingEnabled={true}
           zoomEnabled={true}
@@ -101,7 +138,7 @@ const CourtMap = (props) => {
             longitudeDelta: 0.18,
           }}
         >
-          {props.playgrounds.map((marker, index) => (
+          {props.playgrounds && props.playgrounds.map((marker, index) => (
             <Marker
               key={index}
               coordinate={{

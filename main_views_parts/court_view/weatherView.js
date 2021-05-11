@@ -193,7 +193,7 @@ const WeatherView = (props) => {
         <Left>
           <Text>Temperature</Text>
         </Left>
-        <Text>{temperature}</Text>
+        <Text>{Math.round(temperature)}/{Math.round((temperature-32) * 5/9)} F/C</Text>
       </ListItem>
       <ListItem noIndent>
         <Left>
@@ -205,7 +205,7 @@ const WeatherView = (props) => {
         <Left>
           <Text>Wind</Text>
         </Left>
-        <Text>{wind}</Text>
+        <Text>{Math.round(wind)}/{Math.round(wind * 1.6)} mi/km</Text>
       </ListItem>
     </View>
   );

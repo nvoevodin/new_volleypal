@@ -120,7 +120,7 @@ const SettingsList = (props) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style = {{top:10}}>
       <ListItem>
         <Left>
           <Text>Name</Text>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, TouchableOpacity, Alert, View } from "react-native";
+import { ScrollView, TouchableOpacity, Alert, View, ActivityIndicator,StyleSheet } from "react-native";
 import { Left, ListItem, Text, Separator, Button, List } from "native-base";
 import { connect } from "react-redux";
 import { getEvents, deleteEvent } from "./functions/getEventsFunction";
 const moment = require("moment");
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const EventsTab = (props) => {
@@ -14,25 +14,38 @@ const EventsTab = (props) => {
 
   //const [preChecked, setPreChecked] = useState(false)
   const [trigger, setTrigger] = useState(true);
-
+  const [submittedAnimation, setSubmittedAnimation] = useState(false);
   useEffect(() => {
     (async () => {
+      setSubmittedAnimation(true);
       const gettingEvents = await getEvents(props.reducer.playgroundId);
 
       setEvents(gettingEvents);
+      setSubmittedAnimation(false);
     })();
   }, [trigger]);
-
+console.log(events)
   const deleteEventFunc = (x) => {
     deleteEvent(x);
     setTrigger(!trigger);
     alert("Event deleted!");
   };
 
+  const refreshEvents = async () => {
+    setSubmittedAnimation(true);
+    new Date().getTime() - props.reducer.lastEventsRefresh > 60000 ?
+    (await props.storeLastEventsRefresh(moment().valueOf()), setTrigger(!trigger)) :
+    alert('Wait a minute before refreshing again!')
+    setSubmittedAnimation(false);
+  }
+
   return (
     <>
       <ScrollView>
-        {events.map((i, index) => (
+      <Button onPress = {()=> refreshEvents()} rounded style = {{alignSelf:'center', margin:8, padding: 8, backgroundColor:"#e3e8e6"}}>
+              <MaterialCommunityIcons name="refresh" color="grey" size={30} />
+            </Button>
+        {events && events.map((i, index) => (
           <List key={index}>
             <Separator bordered>
               <Text>{moment(i["date"]).utc().format("ll")}</Text>
@@ -94,6 +107,16 @@ const EventsTab = (props) => {
               ))}
           </List>
         ))}
+              {submittedAnimation && (
+        <View style={styles.loading}>
+          <ActivityIndicator
+            pointerEvents="none"
+            animating={submittedAnimation}
+            size="large"
+            color="white"
+          />
+        </View>
+      )}
       </ScrollView>
     </>
   );
@@ -107,8 +130,23 @@ const mapStateToProps = (state) => {
 const mapDispachToProps = (dispatch) => {
   return {
     storeEventInfo: (x) => dispatch({ type: "STORE_EVENT_INFO", value: x }),
-    //cancelPreCheck: () => dispatch({ type: "TOGGLE_PRECHECK", value: false }),
+    storeLastEventsRefresh: (time) => dispatch({ type: "STORE_LAST_EVENTS_REFRESH", value: time }),
   };
 };
 
 export default connect(mapStateToProps, mapDispachToProps)(EventsTab);
+
+const styles = StyleSheet.create({
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    backgroundColor: "#666570",
+    opacity: 0.8,
+  },
+});

@@ -1,41 +1,47 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useNavigation } from '@react-navigation/native';
+// import React from "react";
+// import { StyleSheet, View } from "react-native";
+// import { StatusBar } from "expo-status-bar";
+// import { connect } from "react-redux";
+// import { useNavigation } from "@react-navigation/native";
+// import PlayersHeader from "../main_views_parts/profile_view/header";
+// import PlayersTabs from "../main_views_parts/profile_view/slidingMenus";
 
-const ProfileView = (props)=> {
+// const ProfileView = (props) => {
+//   const navigation = useNavigation();
 
-  const navigation = useNavigation();
-        return(
+//   return (
+//     <React.Fragment>
+//       <PlayersHeader 
+//       playgroundImage={props.reducer.playgroundImage} 
+//       />
 
+//       <View style={styles.container}>
+//         <PlayersTabs />
+//       </View>
 
-         <React.Fragment>
-           
-           <View style = {styles.container}>
-           <TouchableOpacity onPress = {()=>navigation.navigate("Courts")}>
-             <Text>Profile</Text>
-             </TouchableOpacity>
-             </View>
-           
-           
-            <StatusBar style="auto" />
-            </React.Fragment>
+//       <StatusBar style="auto" />
+//     </React.Fragment>
+//   );
+// };
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 5,
+//     //backgroundColor: 'pink',
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
 
+// const mapStateToProps = (state) => {
+//   const { reducer } = state;
+//   return { reducer };
+// };
 
+// const mapDispachToProps = (dispatch) => {
+//   return {
+//     //storePlayground: (name,id,lat,lon) => dispatch({ type: "STORE_PLAYGROUND", value: name,value1: id, value2:lat,value3:lon})
+//   };
+// };
 
-        )
-    
-
-}
-export default ProfileView
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'pink',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+// export default connect(mapStateToProps, mapDispachToProps)(ProfileView);

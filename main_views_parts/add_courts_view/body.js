@@ -35,12 +35,14 @@ const AddCourtBody = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
 
       setPlaygrounds(await getPlaygrounds());
+
+      alert("Make sure you are at the courts location when you adding it. If you are not, the court that you are adding will not be displayed on the map correctly and will eventually be removed!")
     })();
   }, []);
 
@@ -56,6 +58,15 @@ const AddCourtBody = () => {
       country === "Cancel"
     ) {
       alert("Must fill out all required fields!");
+    } else if (
+      /[|\"[\]{}`\\']/.test(name) ||
+      /[|\"[\]{}`\\']/.test(city) ||
+      /[|\"[\]{}`\\']/.test(address) ||
+      /[|\"[\]{}`\\']/.test(description) ||
+      /[|\"[\]{}`\\']/.test(phone)
+
+    ) {
+      alert("Cant have special characters in any of the fields!");
     } else {
       setSubmittedAnimation(true);
       await getCurrentLoc(
@@ -90,6 +101,16 @@ const AddCourtBody = () => {
   const ReceiveSurfaceFromPicker = (x) => {
     setSurface(x);
   };
+const descriptionFunc = (x) =>{
+  if (/[|\"[\]{}`\\']/.test(x)) {
+    alert('Cant use characters like this!')
+  } else {
+    setDescription(x)
+  }
+  
+}
+  
+ 
 
   const selectImage = (x) => {
     setImage(x);
@@ -242,7 +263,7 @@ const AddCourtBody = () => {
           blurOnSubmit={true}
           rowSpan={6}
           placeholder="Write a few sentences here about the courts. Describe things like types of play, levels, number of people and times. Are there nets all the time, and is it beginner friendly? Please, be as descriptive as possible! If you have nothing to say about the courts, let someone else add them."
-          onChangeText={(Description) => setDescription(Description)}
+          onChangeText={(Description) => descriptionFunc(Description)}
         />
 
         <Text

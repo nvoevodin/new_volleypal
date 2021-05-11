@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 const AddEventHeader = () => {
   const navigation = useNavigation();
   return (
-    <View style={{ height: Platform.OS === "android" ? "8%" : null }}>
+    <View style={{ height: Platform.OS === "android" ? "8%" : null, zIndex:5 }}>
       <Header style={styles.header}>
         <Left>
           <Button transparent onPress={() => navigation.navigate("Court")}>

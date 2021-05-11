@@ -20,7 +20,7 @@ const GroupHeader = (props) => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ height: Platform.OS === "android" ? "8%" : null }}>
+    <View style={{ height: Platform.OS === "android" ? "9%" : null }}>
       <Header style={styles.header}>
         <Left>
           <Button transparent onPress={() => navigation.navigate("Groups")}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
       },
       android: {
-        top: "5%",
+        height:'110%',
         borderBottomWidth: 0,
         elevation: 0,
       },

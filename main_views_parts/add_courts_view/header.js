@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 const AddCourtHeader = () => {
   const navigation = useNavigation();
   return (
-    <View style={{ backgroundColor: "#e3e8e6" }}>
+    <View style={{ backgroundColor: "#e3e8e6", zIndex:5 }}>
       <Header style={styles.header}>
         <Left>
           <Button transparent onPress={() => navigation.navigate("Courts")}>

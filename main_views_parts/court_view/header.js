@@ -11,6 +11,8 @@ import {
   Title,
   Text,
 } from "native-base";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import onShare from "./shareButton";
 import { ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -27,7 +29,7 @@ const HomeHeader = (props) => {
     });
   }, []);
 
-  const makeDefault = (name, id, lat, lon, image, description, phone) => {
+  const makeDefault = (name, id, lat, lon, image, description, phone, type, surface, distance,city) => {
     Alert.alert(
       `${name} selected.`,
       `Do you want to make ${name} your default court?`,
@@ -43,7 +45,7 @@ const HomeHeader = (props) => {
             try {
               AsyncStorage.setItem(
                 "defaultCourt",
-                JSON.stringify([name, id, lat, lon, image, description, phone])
+                JSON.stringify([name, id, lat, lon, image, description, phone, type, surface, distance, city])
               );
               setDefaultCourt(true);
             } catch (e) {
@@ -107,7 +109,11 @@ const HomeHeader = (props) => {
                     props.reducer.playgroundLon,
                     props.reducer.playgroundImage,
                     props.reducer.playgroundDescription,
-                    props.reducer.playgroundPhone
+                    props.reducer.playgroundPhone,
+                    props.reducer.playgroundType,
+                    props.reducer.playgroundSurface,
+                    props.reducer.playgroundDistance,
+                    props.reducer.playgroundCity
                   )
             }
           >
@@ -133,27 +139,42 @@ const HomeHeader = (props) => {
           zIndex:2
         }}
       >
-        {props.reducer.playgroundPhone !== "0" && (
+                 <Button
+            rounded
+            style={{
+              backgroundColor: "rgba(212, 190, 190, 0.85)",
+              right: "6%",
+              padding:12
+            }}
+            onPress={() => onShare()}
+          >
+            <MaterialCommunityIcons name="share-variant" color="blue" size={22} />
+            {/* <Text style={{ color: "blue", fontSize: 10 }}>Share</Text> */}
+          </Button>
+        {props.reducer.playgroundPhone !== "" && (
           <Button
             rounded
             style={{
               backgroundColor: "rgba(212, 190, 190, 0.85)",
               right: "3%",
+              padding:12
             }}
             onPress={() => openCall(props.reducer.playgroundPhone)}
           >
-            <Text style={{ color: "blue", fontSize: 10 }}>Call</Text>
+<MaterialCommunityIcons name="phone" color="blue" size={22} />
+            {/* <Text style={{ color: "blue", fontSize: 10 }}>Call</Text> */}
           </Button>
         )}
 
         <Button
           rounded
-          style={{ backgroundColor: "rgba(212, 190, 190, 0.85)" }}
+          style={{ backgroundColor: "rgba(212, 190, 190, 0.85)", padding: 12 }}
           onPress={() =>
             openMaps(props.reducer.playgroundLat, props.reducer.playgroundLon)
           }
         >
-          <Text style={{ color: "blue", fontSize: 10 }}>Directions</Text>
+          <MaterialCommunityIcons name="google-maps" color="blue" size={22} />
+          {/* <Text style={{ color: "blue", fontSize: 10 }}>Directions</Text> */}
         </Button>
       </View>
     </View>

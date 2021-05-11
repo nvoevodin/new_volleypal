@@ -13,10 +13,11 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons'; 
 import { Entypo } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import * as firebase from "firebase";
-
+const moment = require("moment");
 const CourtListHeader = (props) => {
   const navigation = useNavigation();
 
@@ -45,33 +46,49 @@ const CourtListHeader = (props) => {
     );
   };
 
+  const refresCourts = async () => {
+    
+    new Date().getTime() - props.reducer.lastCourtListRefresh > 60000 ?
+    await props.refreshCourtList(!props.reducer.courtListTrigger, moment().valueOf()) :
+    alert('Wait a minute before refreshing again!')
+    
+  }
+  
+
   return (
-    <View style={{ height: Platform.OS === "android" ? "8%" : null }}>
+    <View style={{ height: Platform.OS === "android" ? "9%" : null }}>
       <Header style={styles.header}>
         <Left>
           {props.reducer.signedIn ? (
             <Button transparent onPress={() => signOut()}>
-              <MaterialCommunityIcons name="exit-run" color="red" size={26} />
+              <MaterialCommunityIcons name="exit-run" color="red" size={25} />
             </Button>
           ) : (
             <Button transparent onPress={() => navigation.navigate("Court")}>
-              <MaterialCommunityIcons name="login" color="green" size={26} />
+              <MaterialCommunityIcons name="login" color="green" size={25} />
             </Button>
           )}
         </Left>
-        <Body>
+        <Body style = {{marginRight:12}}>
           <Title style={{ color: "black" }}>Select Courts</Title>
         </Body>
         {props.reducer.signedIn && (
           <Right>
+                        <Button
+              transparent
+              onPress={() => refresCourts()}
+            >
+              <MaterialCommunityIcons name="refresh" color="black" size={27} />
+            </Button>
+
             <Button
               transparent
               onPress={() => navigation.navigate("SettingsView")}
             >
-              <MaterialCommunityIcons name="settings" size={26} color="black" />
+              <Feather name="settings" size={24} color="black" />
             </Button>
             <Button transparent onPress={() => navigation.navigate("AddCourt")}>
-              <Entypo name="plus" size={28} color="black" />
+              <Entypo name="plus" size={27} color="black" />
             </Button>
           </Right>
         )}
@@ -96,6 +113,7 @@ const mapDispachToProps = (dispatch) => {
         value2: sname,
         value3: email,
       }),
+      refreshCourtList: (status,time) => dispatch({type: "STORE_COURT_LIST_REFRESH", value:status, value1: time})
   };
 };
 
@@ -109,7 +127,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
       },
       android: {
-        top: "5%",
+        //top: "5%",
+        height:'110%',
         borderBottomWidth: 0,
         elevation: 0,
       },

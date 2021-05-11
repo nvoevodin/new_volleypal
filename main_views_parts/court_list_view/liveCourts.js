@@ -7,6 +7,7 @@ import {
   Alert,
   Image,
   View,
+  ScrollView
 } from "react-native";
 import {
   Container,
@@ -34,9 +35,9 @@ const LiveCourtsTab = (props) => {
   const navigation = useNavigation();
 
   return (
-    <Content>
+    <ScrollView>
       <List>
-        {props.playgrounds
+        {props.playgrounds && props.playgrounds
           .filter(
             (i) =>
               i["country"] === props.filters[0] &&
@@ -63,6 +64,10 @@ const LiveCourtsTab = (props) => {
                       object["image"],
                       object["description"],
                       object["phone"],
+                      object["type"],
+                      object["surface"],
+                      object["distance"],
+                      object["city"],
                       props.reducer.playgroundDefault
                     ),
                     navigation.navigate("Court")
@@ -105,7 +110,7 @@ const LiveCourtsTab = (props) => {
                     </View>
 
                     <View>
-                      <Text>{object["distance"]} km</Text>
+                      <Text>{props.filters[0] === 'United States'? Math.round(object["distance"] * 0.62)  + ' mi':object["distance"]+ ' km'}</Text>
                     </View>
                   </View>
 
@@ -119,7 +124,7 @@ const LiveCourtsTab = (props) => {
             </ListItem>
           ))}
       </List>
-    </Content>
+    </ScrollView>
   );
 };
 
@@ -138,7 +143,7 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
-    storePlayground: (name, id, lat, lon, img, description, phone, idDefault) =>
+    storePlayground: (name, id, lat, lon, img, description, phone, type, surface, distance,city, idDefault) =>
       dispatch({
         type: "STORE_PLAYGROUND",
         value: name,
@@ -148,7 +153,11 @@ const mapDispachToProps = (dispatch) => {
         value4: img,
         value5: description,
         value6: phone,
-        value7: idDefault,
+        value7: type,
+        value8: surface,
+        value9: distance,
+        value10: city,
+        value11: idDefault,
       }),
   };
 };

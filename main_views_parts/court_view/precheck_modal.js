@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const moment = require("moment");
 
 const PreCheckModal = (props) => {
+
   const handleConfirm = async (date) => {
     var a = new Date(moment().utc().format());
 
@@ -37,9 +38,12 @@ const PreCheckModal = (props) => {
       alert(`Success! You are coming around ${moment(date).format("LT")}.`);
     }
   };
-
+ 
   return (
+    
     <DateTimePickerModal
+   
+    isDarkModeEnabled={false}
       isVisible={props.reducer.preCheckModal}
       mode="time"
       onConfirm={(date) => {

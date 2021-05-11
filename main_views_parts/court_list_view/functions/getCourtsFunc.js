@@ -2,13 +2,14 @@ import { calculateDistance } from "./caclulateDistanceFunc";
 import * as GettingLocs from "./getCurrentLocation";
 
 export const getPlaygrounds = async () => {
+ 
   let location = await GettingLocs.getCurrentLoc();
 
   let fetchResult = fetch(`${global.x}/sites`)
     .then((res) => res.json())
     .then((res) => {
       //console.log(res.data)
-
+      
       var distanceData = res.data.map((i) => {
         //test how far away the user is
         let distance = calculateDistance(
@@ -19,15 +20,19 @@ export const getPlaygrounds = async () => {
         );
 
         i["distance"] = distance["distance"] / 1000;
-
+       
         return i;
       });
+      //console.log(distanceData)
+      distanceData = distanceData.sort(function(a, b) { return a.distance > b.distance })
       return distanceData;
+
     })
     .catch((error) => {
       //console.log(error)
     });
-
+    
+  
   return fetchResult;
   // AsyncStorage.getItem('defaultCourt', (error, result) => {
 

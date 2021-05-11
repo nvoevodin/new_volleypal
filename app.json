@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "new_volleypal",
+    "name": "VolleyPal",
     "slug": "new_volleypal",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e7e7f5"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,21 +17,31 @@
       "**/*"
     ],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyDkdRqA3Cj-Ams9ABRf0GrdarG6pJWWPCA"
+      },
       "supportsTablet": true,
-      "bundleIdentifier": "com.vcoolstudio.volleypal",
-      "buildNumber": "2.0",
+      "bundleIdentifier": "com.nikitavoevodin.volleypal",
+      "buildNumber": "3.0",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription" : "Allow VolleyPal to use your location. Your location is used to check you in at the appropriate court when you enter it, and for adding new courts. Your location data are not used or stored for any other purpose.",
+        
+        "NSLocationWhenInUseUsageDescription": "Allow VolleyPal to use your location. Your location is used to check you in at the appropriate court when you enter it, and for adding new courts. Your location data are not used or stored for any other purpose.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow VolleyPal to use your location. Your location is used to check you in at the appropriate court when you enter it, and for adding new courts. Your location data are not used or stored for any other purpose.",
         "NSLocationAlwaysUsageDescription": "Allow VolleyPal to use your location. Your location is used to check you in at the appropriate court when you enter it, and for adding new courts. Your location data are not used or stored for any other purpose."
-    }},
+      }
+    },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC7phZEopDxsoDPsunbbzTCHS_-vPCHLS4"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#e7e7f5"
       },
-      "package": "com.vcoolstudio.volleypal",
-      "versionCode": 19
+      "package": "com.nikitavoevodin.volleypal",
+      "versionCode": 30
     },
     "web": {
       "favicon": "./assets/favicon.png"

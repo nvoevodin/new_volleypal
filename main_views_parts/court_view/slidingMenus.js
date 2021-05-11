@@ -17,7 +17,7 @@ const HomeTabs = (props) => {
           activeTextStyle={{ color: "grey", fontWeight: "bold", fontSize: 16 }}
           activeTabStyle={{ backgroundColor: "white" }}
           textStyle={{ color: "grey", fontWeight: "normal" }}
-          heading="Courts"
+          heading="Court"
         >
           <MainList />
         </Tab>

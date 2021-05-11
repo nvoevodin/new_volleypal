@@ -3,12 +3,16 @@ import { combineReducers } from "redux";
 const INITIAL_STATE = {
   signedIn: false,
   playgroundName: "",
+  playgroundCity: "",
   playgroundId: "",
   playgroundLat: null,
   playgroundLon: null,
   playgroundImage: "",
   playgroundDescription: "",
   playgroundPhone: "",
+  playgroundType: "",
+  playgroundSurface: "",
+  playgroundDistance: 0,
   playgroundDefault: "",
   preCheckModal: false,
   eventTimeModal: false,
@@ -22,12 +26,31 @@ const INITIAL_STATE = {
   groupInfo: [],
   queueCourtInfo: [],
   createGroupTrigger: true,
+  lastEventsRefresh: 0,
+  courtListTrigger: true,
+  lastCourtListRefresh: 0
+
 };
 
 const ourReducer = (state = INITIAL_STATE, action) => {
   const newState = { ...state };
 
   switch (action.type) {
+    case "STORE_COURT_LIST_REFRESH":
+      return {
+        ...state,
+        courtListTrigger: action.value,
+        lastCourtListRefresh: action.value1,
+      };
+      break;
+
+    case "STORE_LAST_EVENTS_REFRESH":
+      return {
+        ...state,
+        lastEventsRefresh: action.value,
+      };
+      break;
+
     case "CREATE_GROUP_TRIGGER":
       return {
         ...state,
@@ -72,7 +95,11 @@ const ourReducer = (state = INITIAL_STATE, action) => {
         playgroundImage: action.value4,
         playgroundDescription: action.value5,
         playgroundPhone: action.value6,
-        playgroundDefault: action.value7,
+        playgroundType: action.value7,
+        playgroundSurface: action.value8,
+        playgroundDistance: action.value9,
+        playgroundCity: action.value10,
+        playgroundDefault: action.value11,
       };
       break;
 
